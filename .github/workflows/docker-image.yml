@@ -1,0 +1,22 @@
+name: Docker Publish
+
+on:
+  push:
+    branches:
+      - main  
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build the Docker image
+      run: docker build -t fiftydev/mailer .
+
+    - name: Log in to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push to Docker Hub
+      run: docker push fiftydev/mailer:latest
