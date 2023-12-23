@@ -5,7 +5,7 @@ import { emailService } from "./transporter";
 const init = async () => {
             try{
             config()
-            const connection = await  connect("amqp://rabbitmq:5672")
+            const connection = await  connect(process.env.RABBITMQ_URL || "amqp://rabbitmq:5672")
             const channel = await connection.createConfirmChannel();
             const exchanges = ["ACCOUNT_CREATED", "RECOVERY_PASSWORD"];
     
@@ -15,7 +15,6 @@ const init = async () => {
             }
     
     
-            console.log("Testing")
             const consumer = await new Consumer("MAIL",["ACCOUNT_CREATED","RECOVERY_PASSWORD"]).start(connection)
             console.log("Consumer iniciado!")
             consumer.listen(async(response:any) => {
