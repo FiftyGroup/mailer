@@ -1,7 +1,8 @@
 import nodemailer, { Transporter } from "nodemailer";
 import { config } from "dotenv";
+
 config();
-console.log(process.env.EMAIL_HOST)
+
 export class EmailService {
   private transporter: Transporter;
 
